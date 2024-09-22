@@ -42,12 +42,13 @@ class GameLogic {
   void _generatePlatforms() {
     if (platforms.isEmpty) return;
 
-    // 获取最右侧的平台
-    Platform lastPlatform = platforms.reduce((a, b) => a.position.dx > b.position.dx ? a : b);
+    Platform lastPlatform = platforms.last;
+    double screenWidth = 400; // 假设屏幕宽度为400
 
-    // 如果最右侧的平台距离屏幕右侧还有一定距离，则生成新的平台
-    if (lastPlatform.position.dx + lastPlatform.width < 400) { // 假设屏幕宽度为400
-      platforms.add(Platform.generateNewPlatform(lastPlatform.position.dx));
+    while (lastPlatform.position.dx + lastPlatform.width < screenWidth * 1.5) {
+      Platform newPlatform = Platform.generateNewPlatform(lastPlatform.position.dx);
+      platforms.add(newPlatform);
+      lastPlatform = newPlatform;
     }
   }
 
