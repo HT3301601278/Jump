@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../game/game_screen.dart';
+import 'difficulty_menu.dart';
 
 class StartMenu extends StatelessWidget {
   const StartMenu({super.key});
@@ -13,7 +14,7 @@ class StartMenu extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const GameScreen()),
+              MaterialPageRoute(builder: (context) => const DifficultyMenu()),
             );
           },
         ),

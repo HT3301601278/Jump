@@ -9,7 +9,14 @@ import '../widgets/pause_menu.dart';
 import '../widgets/start_menu.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  final double platformSpeed;
+  final bool allowContinuousJump;
+
+  const GameScreen({
+    Key? key,
+    this.platformSpeed = 2.0,
+    this.allowContinuousJump = false,
+  }) : super(key: key);
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -41,7 +48,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
       _player = Player(maxHeight: 100.0);
     }
 
-    _gameLogic = GameLogic(_player, _platforms, platformSpeed: 2.0);
+    _gameLogic = GameLogic(_player, _platforms, platformSpeed: widget.platformSpeed);
     _scoreManager = ScoreManager();
     _controller = AnimationController(
       vsync: this,
@@ -57,7 +64,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
   Future<void> _preloadAudio() async {
     try {
       await _audioPlayer.setSource(AssetSource('sounds/jump.mp3'));
-      await _audioPlayer.setPlaybackRate(1);
+      await _audioPlayer.setPlaybackRate(1.0);
       print('音频已预加载，播放速度已调整');
     } catch (e) {
       print('预加载音频时出错: $e');
@@ -81,7 +88,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
   }
 
   void _onTap() {
-    _player.jump();
+    _player.jump(widget.allowContinuousJump);
     _audioPlayer.stop();
     _audioPlayer.seek(Duration.zero);
     _audioPlayer.play(AssetSource('sounds/jump.mp3'));

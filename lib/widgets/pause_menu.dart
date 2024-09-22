@@ -17,7 +17,7 @@ class PauseMenu extends StatelessWidget {
           onPressed: onResume,
         ),
         TextButton(
-          child: const Text('退出游戏'),
+          child: const Text('返回主页'),
           onPressed: onQuit,
         ),
       ],
