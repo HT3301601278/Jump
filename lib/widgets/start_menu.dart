@@ -9,14 +9,29 @@ class StartMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          child: const Text('开始游戏'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DifficultyMenu()),
-            );
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              child: const Text('简单模式'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GameScreen(allowContinuousJump: true)),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('自定义模式'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DifficultyMenu()),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

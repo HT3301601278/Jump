@@ -16,22 +16,12 @@ class _DifficultyMenuState extends State<DifficultyMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('选择难度')),
+      appBar: AppBar(title: const Text('自定义模式')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              child: const Text('简单模式'),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const GameScreen()),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-            const Text('自定义模式'),
+            const Text('平台移动速度'),
             Slider(
               value: _platformSpeed,
               min: 1.0,
@@ -44,20 +34,19 @@ class _DifficultyMenuState extends State<DifficultyMenu> {
                 });
               },
             ),
-            const Text('平台移动速度'),
+            const Text('小球下降速度'),
             Slider(
               value: _gravity,
               min: 0.1,
               max: 0.5,
               divisions: 4,
-              label: _gravity.toString(),
+              label: _gravity.toStringAsFixed(1),
               onChanged: (value) {
                 setState(() {
-                  _gravity = value;
+                  _gravity = double.parse(value.toStringAsFixed(1));
                 });
               },
             ),
-            const Text('小球下降速度'),
             CheckboxListTile(
               title: const Text('允许连续跳跃'),
               value: _allowContinuousJump,
@@ -68,7 +57,7 @@ class _DifficultyMenuState extends State<DifficultyMenu> {
               },
             ),
             ElevatedButton(
-              child: const Text('开始自定义游戏'),
+              child: const Text('开始游戏'),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,

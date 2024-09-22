@@ -82,7 +82,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
         _controller.stop();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => GameOver(score: _scoreManager.score)),
+          MaterialPageRoute(builder: (context) => GameOver(score: _scoreManager.score, platformSpeed: widget.platformSpeed, allowContinuousJump: widget.allowContinuousJump, gravity: widget.gravity)),
         );
       } else {
         setState(() {});

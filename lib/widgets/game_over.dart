@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import '../game/game_screen.dart';
+import '../widgets/start_menu.dart';
 
 class GameOver extends StatelessWidget {
   final int score;
+  final double platformSpeed;
+  final bool allowContinuousJump;
+  final double gravity;
 
-  const GameOver({super.key, required this.score});
+  const GameOver({
+    super.key,
+    required this.score,
+    required this.platformSpeed,
+    required this.allowContinuousJump,
+    required this.gravity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,23 @@ class GameOver extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const GameScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => GameScreen(
+                      platformSpeed: platformSpeed,
+                      allowContinuousJump: allowContinuousJump,
+                      gravity: gravity,
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('返回主页'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => StartMenu()),
                 );
               },
             ),
