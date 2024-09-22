@@ -132,6 +132,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
     return GestureDetector(
       onTap: _onTap,
       child: Scaffold(
+        backgroundColor: Color(0xFF1A2B3C),
         body: Stack(
           children: [
             ..._platforms.map((platform) => Positioned(
@@ -140,7 +141,10 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
               child: Container(
                 width: platform.width,
                 height: platform.height,
-                color: Colors.green,
+                decoration: BoxDecoration(
+                  color: Color(0xFF4CAF50),
+                  borderRadius: BorderRadius.circular(5),
+                ),
               ),
             )),
             Positioned(
@@ -154,8 +158,8 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
                 child: Container(
                   width: _player.size,
                   height: _player.size,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFF9800),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -166,14 +170,14 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
               left: 20,
               child: Text(
                 '分数: ${_scoreManager.score}',
-                style: const TextStyle(fontSize: 24, color: Colors.white),
+                style: TextStyle(fontSize: 24, color: Colors.white),
               ),
             ),
             Positioned(
               top: 40,
               right: 20,
               child: IconButton(
-                icon: const Icon(Icons.pause, color: Colors.white),
+                icon: Icon(Icons.pause, color: Colors.white),
                 onPressed: _pauseGame,
               ),
             ),

@@ -19,16 +19,21 @@ class GameOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF1A2B3C),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('游戏结束', style: TextStyle(fontSize: 36, color: Colors.red)),
+            Text('游戏结束', style: TextStyle(fontSize: 36, color: Colors.white)),
             SizedBox(height: 20),
-            Text('分数: $score', style: TextStyle(fontSize: 24)),
+            Text('分数: $score', style: TextStyle(fontSize: 24, color: Colors.white)),
             SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('重新开始'),
+              child: Text('重新开始'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF64B5F6),
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -44,7 +49,11 @@ class GameOver extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('返回主页'),
+              child: Text('返回主页'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF64B5F6),
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
