@@ -50,7 +50,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
     } else {
       _player = Player(maxHeight: 100.0, gravity: widget.gravity);
     }
-
+    _audioPlayer = AudioPlayer();
     _gameLogic = GameLogic(_player, _platforms, platformSpeed: widget.platformSpeed, allowContinuousJump: widget.allowContinuousJump);
     _scoreManager = ScoreManager();
     _controller = AnimationController(
@@ -58,8 +58,6 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
       duration: const Duration(milliseconds: 16),
     )..addListener(_update);
     _controller.repeat();
-
-    _audioPlayer = AudioPlayer();
     
     _preloadAudio();
   }
@@ -78,14 +76,15 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
     if (!_isPaused) {
       _gameLogic.update();
       _scoreManager.update(_player.position);
+      setState(() {
+        _platforms = _gameLogic.platforms;
+      });
       if (_gameLogic.isGameOver()) {
         _controller.stop();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => GameOver(score: _scoreManager.score, platformSpeed: widget.platformSpeed, allowContinuousJump: widget.allowContinuousJump, gravity: widget.gravity)),
         );
-      } else {
-        setState(() {});
       }
     }
   }
@@ -135,13 +134,6 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
       child: Scaffold(
         body: Stack(
           children: [
-            const RepaintBoundary(
-              child: SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.lightBlueAccent),
-                ),
-              ),
-            ),
             ..._platforms.map((platform) => Positioned(
               left: platform.position.dx,
               top: platform.position.dy,
@@ -154,12 +146,18 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
             Positioned(
               left: _player.position.dx,
               top: _player.position.dy,
-              child: Container(
-                width: _player.size,
-                height: _player.size,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..scale(_player.scale)
+                  ..rotateZ(_player.rotation),
+                alignment: Alignment.center,
+                child: Container(
+                  width: _player.size,
+                  height: _player.size,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),
