@@ -10,6 +10,7 @@ class DifficultyMenu extends StatefulWidget {
 
 class _DifficultyMenuState extends State<DifficultyMenu> {
   double _platformSpeed = 2.0;
+  double _gravity = 0.2;
   bool _allowContinuousJump = false;
 
   @override
@@ -44,6 +45,19 @@ class _DifficultyMenuState extends State<DifficultyMenu> {
               },
             ),
             const Text('平台移动速度'),
+            Slider(
+              value: _gravity,
+              min: 0.1,
+              max: 0.5,
+              divisions: 4,
+              label: _gravity.toString(),
+              onChanged: (value) {
+                setState(() {
+                  _gravity = value;
+                });
+              },
+            ),
+            const Text('小球下降速度'),
             CheckboxListTile(
               title: const Text('允许连续跳跃'),
               value: _allowContinuousJump,
@@ -62,6 +76,7 @@ class _DifficultyMenuState extends State<DifficultyMenu> {
                     builder: (context) => GameScreen(
                       platformSpeed: _platformSpeed,
                       allowContinuousJump: _allowContinuousJump,
+                      gravity: _gravity,
                     ),
                   ),
                 );

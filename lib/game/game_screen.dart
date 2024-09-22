@@ -11,11 +11,13 @@ import '../widgets/start_menu.dart';
 class GameScreen extends StatefulWidget {
   final double platformSpeed;
   final bool allowContinuousJump;
+  final double gravity;
 
   const GameScreen({
     Key? key,
     this.platformSpeed = 2.0,
     this.allowContinuousJump = false,
+    this.gravity = 0.2,
   }) : super(key: key);
 
   @override
@@ -43,12 +45,13 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
           _platforms.first.position.dy - 50.0,
         ),
         maxHeight: 100.0,
+        gravity: widget.gravity,
       );
     } else {
-      _player = Player(maxHeight: 100.0);
+      _player = Player(maxHeight: 100.0, gravity: widget.gravity);
     }
 
-    _gameLogic = GameLogic(_player, _platforms, platformSpeed: widget.platformSpeed);
+    _gameLogic = GameLogic(_player, _platforms, platformSpeed: widget.platformSpeed, allowContinuousJump: widget.allowContinuousJump);
     _scoreManager = ScoreManager();
     _controller = AnimationController(
       vsync: this,
